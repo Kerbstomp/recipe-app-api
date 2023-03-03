@@ -24,6 +24,16 @@ class IngredientSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
+class RecipeImageSerializer(serializers.ModelSerializer):
+    '''Serializer for uploading images for Recipe'''
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'image']
+        read_only_fields = ['id']
+        extra_kwargs = {'image': {'required': 'True'}}
+
+
 class RecipeSerializer(serializers.ModelSerializer):
     '''Serializer for Recipes'''
     tags = TagSerializer(many=True, required=False)
@@ -92,4 +102,4 @@ class RecipeDetailSerializer(RecipeSerializer):
     '''Serializer for Recipe detail view'''
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description']
+        fields = RecipeSerializer.Meta.fields + ['description', 'image']
